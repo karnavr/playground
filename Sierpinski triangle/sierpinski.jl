@@ -9,6 +9,7 @@ begin
 	using Random
 	using Plots
 	using Random
+	using DelimitedFiles
 end
 
 # ╔═╡ 51b30380-c9ba-11ec-2a86-cddbfe8557c5
@@ -39,7 +40,7 @@ end
 
 # ╔═╡ 06a0c77a-1b82-401b-8620-beb416310fc7
 begin
-	n = 1000
+	n = 10000
 
 	p = [0.5,0.25] 			# we choose initial
 	points = [triangle p]   # initialize points array
@@ -61,12 +62,16 @@ end
 # ╔═╡ 228c92f1-90de-4457-ad07-81441708a9ab
 begin
 	scatter(points[1,:], points[2,:], markersize = 1, legend = false, 
-		showaxis = true, ticks = true)
+		showaxis = true, ticks = true, markershape=:utriangle)
 end
+
+# ╔═╡ 233becc3-7117-4c9c-91f8-4b7b07edadb1
+writedlm("points.csv",  points', ',')
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
@@ -957,5 +962,6 @@ version = "0.9.1+5"
 # ╠═5c6eac60-0b4a-4ba9-9bcc-19ab1f0aa51b
 # ╠═06a0c77a-1b82-401b-8620-beb416310fc7
 # ╠═228c92f1-90de-4457-ad07-81441708a9ab
+# ╠═233becc3-7117-4c9c-91f8-4b7b07edadb1
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
