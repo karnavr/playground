@@ -65,6 +65,9 @@ begin
 		showaxis = true, ticks = true, markershape=:utriangle)
 end
 
+# ╔═╡ 25a0aefb-7c73-444d-ada1-fa433f3535d1
+md"save data to a csv file to animate using manim"
+
 # ╔═╡ 233becc3-7117-4c9c-91f8-4b7b07edadb1
 writedlm("points.csv",  points', ',')
 
@@ -962,6 +965,7 @@ version = "0.9.1+5"
 # ╠═5c6eac60-0b4a-4ba9-9bcc-19ab1f0aa51b
 # ╠═06a0c77a-1b82-401b-8620-beb416310fc7
 # ╠═228c92f1-90de-4457-ad07-81441708a9ab
+# ╟─25a0aefb-7c73-444d-ada1-fa433f3535d1
 # ╠═233becc3-7117-4c9c-91f8-4b7b07edadb1
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
