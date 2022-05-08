@@ -18,6 +18,7 @@ for i in range(len(data[:,0])):
 
 
 config.background_color = "#FFFAF9"
+myBlue = "#001A33"
 
 
 class sierpinski(Scene):
@@ -25,29 +26,68 @@ class sierpinski(Scene):
 
         # create Axes upon which to plot points (custom ranges, more control over placement, etc.)
         axes = Axes(
-            x_range = [0.01, 1.01, 0.1],
-            y_range = [0.01, 0.9, 0.1],
-            x_length = 12,
-            axis_config = {"color": BLACK},
+            x_range = [0.0, 1.01, 0.1],
+            y_range = [0.0, 0.9, 0.1],
+            x_length = 8,
+            axis_config = {"color": "#FFFAF9"},
             tips = False,
-            y_axis_config = {"numbers_to_include": [0.1,0.2,0.3,0.4, 0.9]}
+            y_axis_config = {"numbers_to_include": [0.1, 0.9]}
         )
-        axes_labels = axes.get_axis_labels(x_label = "x", y_label = "y").set_color(BLACK)
-        axes.get_y_axis().numbers.set_color(BLACK)
+        # axes_labels = axes.get_axis_labels(x_label = "x", y_label = "y").set_color(BLACK)
+        # axes.get_y_axis().numbers.set_color(BLACK)
 
         # create VGroup of Dots
-        dots = VGroup(*[Dot(point = axes.c2p(point[0],point[1]), color=BLUE, radius=0.01) for point in points])
+        dots = VGroup(*[Dot(point = axes.c2p(point[0],point[1]), color=myBlue, radius=0.01) for point in points])
 
-        # ANIMATIONS
-        self.play(DrawBorderThenFill(axes))
-        self.wait(0.5)
+        # POINT COUNTER 
+        n = ValueTracker(0)     # initialize value tracker
+
+        # label and integer value
+        label = Text(
+            "points:",
+            font_size = 20,
+            color = myBlue, 
+            font = "BITSTREAM VERA SERIF",
+            ).to_corner(corner=UP + LEFT, buff=0.5)
+        number = always_redraw( lambda : Integer(
+            color = myBlue, font_size = 30
+            ).set_value(n.get_value()).next_to(label, RIGHT, buff=0.1).shift(UP * 0.02))
+
+
+        ## ANIMATIONS
+
+        # create title card 
+
+
+        # create point counter label/text
+        self.play(Write(label))
+        self.play(Write(number))
+
+        # create axes
+        self.play(DrawBorderThenFill(axes), run_time=0.5)
 
         # sequentially create each dot
-        for i in range(50):
-            self.play(Create(dots[i]), run_time = 0.01)
+        numb = 1000
+        self.play(
+            ShowIncreasingSubsets(dots[:numb]), 
+            n.animate.set_value(numb), 
+            run_time = 10, 
+            rate_func = rate_functions.smooth)
+
+        ## Dumb solution left for posterity + for my future-self to laugh at haha
+        # sequentially create each dot (perhaps add a smoothing curve)
+        # for i in range(500):
+        #     if i < 100:
+        #         self.play(Create(dots[i]), run_time = 0.001)
+        #         n.set_value(i)   # update the value tracker
+        #     else:
+        #         self.play(Create(dots[i:i+10]), run_time=1e-6)
+        #         n.set_value(i+10)   # update the value tracker
 
 
-# code from: https://www.reddit.com/r/manim/comments/pfbb36/how_to_animate_scatter_plot_by_plotting_one_point/
+
+
+# reference code from: https://www.reddit.com/r/manim/comments/pfbb36/how_to_animate_scatter_plot_by_plotting_one_point/
 class TestAnimation(Scene):
     def construct(self):
         coords = self.return_coords_from_csv("data")    # creates 1D array of arrays (each is a coord location)
