@@ -24,6 +24,15 @@ myBlue = "#001A33"
 class sierpinski(Scene):
     def construct(self):
 
+        title_card = Text(
+            " approximating the sierpinski\ntriangle using the chaos game", 
+            font_size = 40,
+            color = myBlue, 
+            font = "BITSTREAM VERA SERIF",
+            line_spacing = 1,
+            should_center = True
+        )
+
         # create Axes upon which to plot points (custom ranges, more control over placement, etc.)
         axes = Axes(
             x_range = [0.0, 1.01, 0.1],
@@ -57,21 +66,23 @@ class sierpinski(Scene):
         ## ANIMATIONS
 
         # create title card 
-
+        self.play(Write(title_card), run_time=3)
+        self.wait()
+        self.play(FadeOut(title_card))
 
         # create point counter label/text
-        self.play(Write(label))
-        self.play(Write(number))
+        self.play(Write(label), run_time=0.5)
+        self.play(Write(number), run_time=0.5)
 
         # create axes
-        self.play(DrawBorderThenFill(axes), run_time=0.5)
+        self.add(axes)
 
-        # sequentially create each dot
-        numb = 1000
+        # sequentially create each dot (smooth rate function)
+        numb = 100
         self.play(
             ShowIncreasingSubsets(dots[:numb]), 
             n.animate.set_value(numb), 
-            run_time = 10, 
+            run_time = 39, 
             rate_func = rate_functions.smooth)
 
         ## Dumb solution left for posterity + for my future-self to laugh at haha
