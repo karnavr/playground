@@ -12,3 +12,5 @@ The game:
 1. Randomly select one of the 3 original vertex points.
 2. Draw a new point halfway between your current position and the selected vertex point. This is your new position.
 3. Repeat the above two steps a lot of times.
+
+![](https://github.com/karnavr/playground/blob/main/Sierpinski%20triangle/sierpinski.gif)
